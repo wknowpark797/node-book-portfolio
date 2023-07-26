@@ -3,8 +3,9 @@ const router = express.Router();
 const { Review } = require('../model/reviewSchema');
 const { Counter } = require('../model/counterSchema');
 
+// Review Create
 router.post('/create', (req, res) => {
-	console.log('request: ', req.body);
+	console.log('create request: ', req.body);
 
 	const params = req.body;
 
@@ -25,6 +26,20 @@ router.post('/create', (req, res) => {
 						res.json({ success: false });
 					});
 			});
+		});
+});
+
+// Review List Read
+router.get('/read', (req, res) => {
+	Review.find()
+		.exec()
+		.then((doc) => {
+			console.log('review list: ', doc);
+			res.json({ success: true, reviewList: doc });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json({ success: false });
 		});
 });
 
