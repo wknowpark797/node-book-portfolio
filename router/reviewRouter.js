@@ -43,4 +43,18 @@ router.get('/read', (req, res) => {
 		});
 });
 
+// Review Delete
+router.post('/delete', (req, res) => {
+	console.log('delete request: ', req.body);
+
+	Review.deleteOne({ reviewNum: req.body.reviewNum })
+		.exec()
+		.then(() => {
+			res.json({ success: true });
+		})
+		.catch((err) => {
+			res.json({ success: false });
+		});
+});
+
 module.exports = router;
