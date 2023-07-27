@@ -4,6 +4,7 @@ const counterSchema = new mongoose.Schema(
 	{
 		name: String,
 		reviewNum: Number,
+		userNum: Number,
 	},
 	{ collection: 'Counter' }
 );

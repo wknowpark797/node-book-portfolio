@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, 'http://localhost:3000/react-book-po
 
 // 전용 라우터 설정
 app.use('/api/review', require('./router/reviewRouter'));
+app.use('/api/user', require('./router/userRouter'));
 
 // 데이터베이스 연동
 app.listen(port, () => {

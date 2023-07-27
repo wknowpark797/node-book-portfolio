@@ -5,8 +5,12 @@ const reviewSchema = new mongoose.Schema(
 		bookName: String,
 		content: String,
 		reviewNum: Number,
+		writer: {
+			ref: 'User',
+			type: mongoose.Schema.Types.ObjectId,
+		},
 	},
-	{ collection: 'Reviews' }
+	{ collection: 'Reviews', timestamps: true }
 );
 
 const Review = mongoose.model('Review', reviewSchema);
