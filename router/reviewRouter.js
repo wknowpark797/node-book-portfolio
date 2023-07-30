@@ -6,9 +6,7 @@ const { Counter } = require('../model/counterSchema');
 
 // Review Create
 router.post('/create', (req, res) => {
-	console.log('create request: ', req.body);
-
-	const params = req.body; // bookName, content
+	const params = req.body; // { bookName, reviewContent, uid }
 
 	Counter.findOne({ name: 'counter' })
 		.exec()
@@ -36,33 +34,59 @@ router.post('/create', (req, res) => {
 		});
 });
 
-// Review List Read
-router.get('/read/:num', (req, res) => {
+// Review Read (List)
+router.get('/read/:limit', (req, res) => {
 	Review.find()
 		.populate('writer')
 		.sort({ createdAt: -1 })
-		.limit(req.params.num)
+		.limit(req.params.limit)
 		.exec()
 		.then((doc) => {
-			console.log('review list: ', doc);
 			res.json({ success: true, reviewList: doc });
 		})
 		.catch((err) => {
-			console.log(err);
+			res.json({ success: false, err: err });
+		});
+});
+
+// Review Detail
+router.get('/detail/:num', (req, res) => {
+	Review.findOne({ reviewNum: req.params.num })
+		.populate('writer')
+		.exec()
+		.then((doc) => {
+			res.json({ success: true, detail: doc });
+		})
+		.catch((err) => {
+			res.json({ success: false, err: err });
+		});
+});
+
+// Review Update
+router.put('/update', (req, res) => {
+	const item = {
+		bookName: req.body.bookName,
+		reviewContent: req.body.reviewContent,
+	};
+
+	Review.updateOne({ reviewNum: req.body.reviewNum }, { $set: item })
+		.exec()
+		.then(() => {
+			res.json({ success: true });
+		})
+		.catch(() => {
 			res.json({ success: false });
 		});
 });
 
 // Review Delete
-router.delete('/delete/:id', (req, res) => {
-	console.log('delete request: ', req.params.id);
-
-	Review.deleteOne({ reviewNum: req.params.id })
+router.delete('/delete/:num', (req, res) => {
+	Review.deleteOne({ reviewNum: req.params.num })
 		.exec()
 		.then(() => {
 			res.json({ success: true });
 		})
-		.catch((err) => {
+		.catch(() => {
 			res.json({ success: false });
 		});
 });
