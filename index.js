@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+const config = require('./config/key');
 
 // body parser 설정
 app.use(express.json());
@@ -18,7 +19,7 @@ app.use('/api/user', require('./router/userRouter'));
 // 데이터베이스 연동
 app.listen(port, () => {
 	mongoose
-		.connect('mongodb+srv://wknowpark797:!abcd1234@cluster0.czhuhd2.mongodb.net/')
+		.connect(config.mongoURI)
 		.then(() => console.log(`Server app listening on port ${port} with MongoDB`)) //접속 성공
 		.catch((err) => console.log(err)); //접속 실패
 });
