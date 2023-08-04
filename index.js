@@ -1,5 +1,5 @@
+// const path = require('path');
 const express = require('express');
-const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
@@ -12,8 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
-// react build 폴더
-app.use(express.static(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build')));
+/*
+	// react build 폴더
+	app.use(express.static(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build')));
+*/
 
 // 전용 라우터 설정
 app.use('/api/review', require('./router/reviewRouter'));
@@ -28,9 +30,12 @@ app.listen(port, () => {
 });
 
 app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build/index.html'));
+	res.send('Node Book Portfolio Server');
+	// res.sendFile(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build/index.html'));
 });
 
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build/index.html'));
-});
+/*
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build/index.html'));
+	});
+*/
