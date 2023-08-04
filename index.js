@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 const config = require('./config/key');
@@ -8,6 +9,8 @@ const config = require('./config/key');
 // body parser 설정
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 // react build 폴더
 app.use(express.static(path.join(__dirname, 'http://localhost:3000/react-book-portfolio/build')));
